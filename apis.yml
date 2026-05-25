@@ -1,0 +1,171 @@
+aid: turborepo
+url: https://raw.githubusercontent.com/api-evangelist/turborepo/refs/heads/main/apis.yml
+apis:
+- aid: turborepo:turborepo-remote-cache-api
+  name: Turborepo Remote Cache API
+  tags:
+  - Build System
+  - Caching
+  - Monorepo
+  - Remote Cache
+  - Artifacts
+  humanURL: https://turborepo.dev/docs/core-concepts/remote-caching
+  properties:
+  - url: https://turborepo.dev/docs/core-concepts/remote-caching
+    type: Documentation
+  - url: https://turborepo.dev/docs/openapi
+    type: Documentation
+  - url: https://turborepo.dev/api/remote-cache-spec
+    type: OpenAPI
+  - url: openapi/turborepo-remote-cache-api-openapi.yml
+    type: OpenAPI
+  description: The Turborepo Remote Cache API specification defines the HTTP interface that any
+    remote cache server must implement to be compatible with Turborepo. The remote cache stores
+    build artifacts (outputs from tasks like build, lint, test) identified by content-addressable
+    hashes. Endpoints cover artifact upload (PUT /artifacts/{hash}), download (GET /artifacts/{hash}),
+    existence checks (HEAD), batch queries (POST /artifacts), status (/artifacts/status), and
+    analytics events (POST /artifacts/events). The Vercel Remote Cache at api.vercel.com is the
+    reference implementation; teams may self-host their own remote cache server (e.g. ducktors/
+    turborepo-remote-cache).
+name: Turborepo
+tags:
+- Build System
+- Monorepo
+- JavaScript
+- TypeScript
+- Caching
+- Open Source
+- Rust
+- Vercel
+- Developer Tools
+- CI/CD
+kind: contract
+image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+access: 3rd-Party
+common:
+- url: https://turborepo.dev
+  type: Portal
+- url: https://turborepo.dev/docs
+  type: Documentation
+- url: https://turborepo.dev/docs/getting-started/installation
+  type: GettingStarted
+- url: https://turborepo.dev/docs/reference/configuration
+  name: turbo.json Configuration Reference
+  type: Documentation
+- url: https://turborepo.dev/docs/reference
+  name: CLI Reference
+  type: Documentation
+- url: https://turborepo.dev/docs/core-concepts/remote-caching
+  name: Remote Caching
+  type: Documentation
+- url: https://turborepo.dev/docs/crafting-your-repository
+  name: Crafting Your Repository
+  type: Documentation
+- url: https://turborepo.dev/docs/telemetry
+  name: Telemetry
+  type: Documentation
+- url: https://turborepo.dev/blog
+  type: Blog
+- url: https://turborepo.dev/showcase
+  name: Showcase
+  type: Documentation
+- url: https://github.com/vercel/turborepo
+  type: GitHubOrganization
+- url: https://github.com/vercel/turborepo
+  name: Turborepo (vercel/turborepo)
+  type: SourceCode
+- url: https://github.com/vercel/turborepo/releases
+  type: ChangeLog
+- url: https://github.com/vercel/turborepo/blob/main/LICENSE
+  name: MIT License
+  type: License
+- url: https://github.com/vercel/turborepo/blob/main/SECURITY.md
+  type: SecurityPolicy
+- url: https://github.com/vercel/turborepo/blob/main/CODE_OF_CONDUCT.md
+  type: CodeOfConduct
+- url: https://github.com/vercel/turborepo/blob/main/CONTRIBUTING.md
+  name: Contributing Guide
+  type: Documentation
+- url: https://www.npmjs.com/package/turbo
+  name: turbo on npm
+  type: Package
+- url: https://www.npmjs.com/package/create-turbo
+  name: create-turbo on npm
+  type: Package
+- url: https://www.npmjs.com/package/eslint-config-turbo
+  name: eslint-config-turbo
+  type: Package
+- url: https://www.npmjs.com/package/eslint-plugin-turbo
+  name: eslint-plugin-turbo
+  type: Package
+- url: https://www.npmjs.com/package/turbo-ignore
+  name: turbo-ignore
+  type: Package
+- url: https://github.com/vercel/turborepo/tree/main/examples
+  name: Examples
+  type: CodeExamples
+- url: https://vercel.com/docs/monorepos/turborepo
+  name: Turborepo on Vercel
+  type: Documentation
+- url: https://vercel.com/docs/monorepos/remote-caching
+  name: Remote Caching on Vercel
+  type: Documentation
+- url: https://vercel.com/pricing
+  name: Vercel Pricing (Remote Cache)
+  type: Pricing
+- url: https://vercel.com/account/tokens
+  name: Vercel Tokens
+  type: Authentication
+- url: https://github.com/vercel/turborepo/discussions
+  type: Forum
+- url: https://x.com/turborepo
+  type: X
+- url: https://bsky.app/profile/turborepo.com
+  type: BlueSky
+- type: Features
+  data:
+  - High-performance build system for JavaScript and TypeScript monorepos, written in Rust
+  - Task pipeline orchestration with dependsOn graphs (turbo run build, lint, test)
+  - Content-addressable local caching of task outputs
+  - Remote Caching with shared artifact store across teammates and CI
+  - Open Remote Cache API specification — any HTTP server can implement it
+  - Vercel Remote Cache as the reference implementation (api.vercel.com)
+  - Self-hosted remote cache compatible (ducktors/turborepo-remote-cache, brunojppb/turbo-cache-server)
+  - Package manager support — npm, pnpm, Yarn, Bun
+  - turbo prune for shipping minimal monorepo subsets to Docker/production
+  - turbo watch for single-process dependency-aware task watching
+  - turbo boundaries for enforcing architectural rules between packages
+  - turbo query — GraphQL queries over monorepo structure
+  - turbo ls for listing packages and dependencies
+  - turbo gen scaffolding for new apps and packages
+  - turbo-ignore helper for CI skip-build decisions based on affected packages
+  - Codemods via turbo-codemod for upgrading between major versions
+  - VS Code extension (turbo-vsc) and ESLint plugin/config
+  - Telemetry CLI (turbo telemetry enable/disable/status) with anonymous opt-out
+  - Login flow (turbo login, turbo link, turbo unlink) for Remote Cache provider auth
+  - turbo bin and turbo docs helper commands
+  - MIT licensed, open source on GitHub (vercel/turborepo)
+  sources:
+  - https://turborepo.dev/
+  - https://turborepo.dev/docs
+  - https://turborepo.dev/docs/core-concepts/remote-caching
+  - https://github.com/vercel/turborepo
+  - https://turborepo.dev/api/remote-cache-spec
+  updated: '2026-05-25'
+created: '2026-05-25T00:00:00.000Z'
+modified: '2026-05-25'
+position: Consuming
+description: Turborepo is a high-performance build system for JavaScript and TypeScript codebases,
+  built by Vercel and written in Rust. It accelerates monorepo development by orchestrating task
+  pipelines with explicit dependency graphs, hashing task inputs to skip redundant work, and
+  caching task outputs locally and remotely so the same build/lint/test never runs twice across
+  developers and CI. The project ships the turbo CLI (turbo run, prune, watch, boundaries, ls,
+  query, generate, login, link, telemetry) plus an open Remote Cache HTTP API specification that
+  any server can implement — Vercel's Remote Cache is the reference, and community implementations
+  enable fully self-hosted caching. Turborepo is MIT-licensed open source at github.com/vercel/turborepo.
+maintainers:
+- FN: Kin Lane
+  email: info@apievangelist.com
+  X: apievangelist
+  url: https://apievangelist.com
+specificationVersion: '0.16'
