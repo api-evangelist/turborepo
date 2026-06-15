@@ -19,14 +19,9 @@ apis:
     type: OpenAPI
   - url: openapi/turborepo-remote-cache-api-openapi.yml
     type: OpenAPI
-  description: The Turborepo Remote Cache API specification defines the HTTP interface that any
-    remote cache server must implement to be compatible with Turborepo. The remote cache stores
-    build artifacts (outputs from tasks like build, lint, test) identified by content-addressable
-    hashes. Endpoints cover artifact upload (PUT /artifacts/{hash}), download (GET /artifacts/{hash}),
-    existence checks (HEAD), batch queries (POST /artifacts), status (/artifacts/status), and
-    analytics events (POST /artifacts/events). The Vercel Remote Cache at api.vercel.com is the
-    reference implementation; teams may self-host their own remote cache server (e.g. ducktors/
-    turborepo-remote-cache).
+  - url: graphql/turborepo-graphql.md
+    type: GraphQL
+  description: The Turborepo Remote Cache API specification defines the HTTP interface that any remote cache server must implement to be compatible with Turborepo. The remote cache stores build artifacts (outputs from tasks like build, lint, test) identified by content-addressable hashes. Endpoints cover artifact upload (PUT /artifacts/{hash}), download (GET /artifacts/{hash}), existence checks (HEAD), batch queries (POST /artifacts), status (/artifacts/status), and analytics events (POST /artifacts/events). The Vercel Remote Cache at api.vercel.com is the reference implementation; teams may self-host their own remote cache server (e.g. ducktors/ turborepo-remote-cache).
 name: Turborepo
 tags:
 - Build System
@@ -155,14 +150,7 @@ common:
 created: '2026-05-25T00:00:00.000Z'
 modified: '2026-05-25'
 position: Consuming
-description: Turborepo is a high-performance build system for JavaScript and TypeScript codebases,
-  built by Vercel and written in Rust. It accelerates monorepo development by orchestrating task
-  pipelines with explicit dependency graphs, hashing task inputs to skip redundant work, and
-  caching task outputs locally and remotely so the same build/lint/test never runs twice across
-  developers and CI. The project ships the turbo CLI (turbo run, prune, watch, boundaries, ls,
-  query, generate, login, link, telemetry) plus an open Remote Cache HTTP API specification that
-  any server can implement — Vercel's Remote Cache is the reference, and community implementations
-  enable fully self-hosted caching. Turborepo is MIT-licensed open source at github.com/vercel/turborepo.
+description: Turborepo is a high-performance build system for JavaScript and TypeScript codebases, built by Vercel and written in Rust. It accelerates monorepo development by orchestrating task pipelines with explicit dependency graphs, hashing task inputs to skip redundant work, and caching task outputs locally and remotely so the same build/lint/test never runs twice across developers and CI. The project ships the turbo CLI (turbo run, prune, watch, boundaries, ls, query, generate, login, link, telemetry) plus an open Remote Cache HTTP API specification that any server can implement — Vercel's Remote Cache is the reference, and community implementations enable fully self-hosted caching. Turborepo is MIT-licensed open source at github.com/vercel/turborepo.
 maintainers:
 - FN: Kin Lane
   email: info@apievangelist.com

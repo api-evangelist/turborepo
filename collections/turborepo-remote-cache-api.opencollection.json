@@ -1,0 +1,276 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Turborepo Remote Cache API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "artifacts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get remote caching status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{protocol}://{host}/artifacts/status",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "The team identifier to perform the request on behalf of. Used for multi-tenant cache implementations where artifacts are scoped to teams."
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "The team slug to perform the request on behalf of. Alternative to `teamId` for identifying the team."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Check the status of Remote Caching for the authenticated user or team. Returns a JSON-encoded status indicating if Remote Caching is enabled, disabled, or disabled due to usage limits.\n\nImplementers should return `enabled` if the authenticated principal is allowed to use the cache, or `disabled` if not. The `over_limit` and `paused` statuses are optional and can be used to indicate usage limits or temporary suspension."
+        },
+        {
+          "info": {
+            "name": "Download a cache artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{protocol}://{host}/artifacts/:hash",
+            "headers": [
+              {
+                "name": "x-artifact-client-ci",
+                "value": ""
+              },
+              {
+                "name": "x-artifact-client-interactive",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "hash",
+                "value": "",
+                "type": "path",
+                "description": "The artifact hash. This is a content-addressable hash that uniquely identifies the cached artifact based on task inputs."
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "The team identifier to perform the request on behalf of. Used for multi-tenant cache implementations where artifacts are scoped to teams."
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "The team slug to perform the request on behalf of. Alternative to `teamId` for identifying the team."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Downloads a cache artifact identified by its `hash` specified on the request path. The artifact is downloaded as an octet-stream (binary data).\n\nThe artifact data is a gzip-compressed tarball containing the cached task outputs. The client will verify the content-length header against the response body size."
+        },
+        {
+          "info": {
+            "name": "Upload a cache artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{protocol}://{host}/artifacts/:hash",
+            "headers": [
+              {
+                "name": "Content-Length",
+                "value": ""
+              },
+              {
+                "name": "x-artifact-duration",
+                "value": ""
+              },
+              {
+                "name": "x-artifact-tag",
+                "value": ""
+              },
+              {
+                "name": "x-artifact-sha",
+                "value": ""
+              },
+              {
+                "name": "x-artifact-dirty-hash",
+                "value": ""
+              },
+              {
+                "name": "x-artifact-client-ci",
+                "value": ""
+              },
+              {
+                "name": "x-artifact-client-interactive",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "hash",
+                "value": "",
+                "type": "path",
+                "description": "The artifact hash. This is a content-addressable hash that uniquely identifies the cached artifact based on task inputs."
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "The team identifier to perform the request on behalf of. Used for multi-tenant cache implementations where artifacts are scoped to teams."
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "The team slug to perform the request on behalf of. Alternative to `teamId` for identifying the team."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Uploads a cache artifact identified by the `hash` specified on the path. The cache artifact can then be downloaded with the provided `hash`.\n\nThe request body should contain a gzip-compressed tarball of the task outputs. The server should store this data and make it available for subsequent downloads."
+        },
+        {
+          "info": {
+            "name": "Check if artifact exists",
+            "type": "http"
+          },
+          "http": {
+            "method": "HEAD",
+            "url": "{protocol}://{host}/artifacts/:hash",
+            "params": [
+              {
+                "name": "hash",
+                "value": "",
+                "type": "path",
+                "description": "The artifact hash. This is a content-addressable hash that uniquely identifies the cached artifact based on task inputs."
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "The team identifier to perform the request on behalf of. Used for multi-tenant cache implementations where artifacts are scoped to teams."
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "The team slug to perform the request on behalf of. Alternative to `teamId` for identifying the team."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Check that a cache artifact with the given `hash` exists. This request returns response headers only and is equivalent to a `GET` request to this endpoint where the response contains no body.\n\nImplementers should return 200 if the artifact exists, or 404 if it does not."
+        },
+        {
+          "info": {
+            "name": "Query artifact information",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{protocol}://{host}/artifacts",
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "The team identifier to perform the request on behalf of. Used for multi-tenant cache implementations where artifacts are scoped to teams."
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "The team slug to perform the request on behalf of. Alternative to `teamId` for identifying the team."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Query information about multiple artifacts by their hashes. Returns metadata about each artifact including size, task duration, and tag.\n\nThis endpoint is optional for basic cache functionality but enables optimized cache fetching by allowing the client to query multiple artifacts in a single request."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "analytics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Record cache usage events",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{protocol}://{host}/artifacts/events",
+            "headers": [
+              {
+                "name": "x-artifact-client-ci",
+                "value": ""
+              },
+              {
+                "name": "x-artifact-client-interactive",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "The team identifier to perform the request on behalf of. Used for multi-tenant cache implementations where artifacts are scoped to teams."
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "The team slug to perform the request on behalf of. Alternative to `teamId` for identifying the team."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Records cache usage analytics events. The body of this request is an array of cache usage events.\n\nThis endpoint is optional but enables cache hit/miss analytics. Implementers can use this data to track cache effectiveness and optimize storage.\n\nEvent types:\n- `HIT`: A cached artifact was found and used\n- `MISS`: No cached artifact was found for the given hash\n\nSource types:\n- `LOCAL`: The cache event was on the user's local filesystem cache\n- `REMOTE`: The cache event is for the remote cache"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

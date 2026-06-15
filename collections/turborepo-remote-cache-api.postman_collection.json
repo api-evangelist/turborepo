@@ -1,0 +1,2921 @@
+{
+  "item": [
+    {
+      "id": "47d1e659-af82-486b-9d2e-ea4a4bf03a3b",
+      "name": "artifacts",
+      "description": {
+        "content": "Operations for managing cache artifacts",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f2977a31-eaff-423f-965e-197517ab94a4",
+          "name": "Get remote caching status",
+          "request": {
+            "name": "Get remote caching status",
+            "description": {
+              "content": "Check the status of Remote Caching for the authenticated user or team. Returns a JSON-encoded status indicating if Remote Caching is enabled, disabled, or disabled due to usage limits.\n\nImplementers should return `enabled` if the authenticated principal is allowed to use the cache, or `disabled` if not. The `over_limit` and `paused` statuses are optional and can be used to indicate usage limits or temporary suspension.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "artifacts",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "The team identifier to perform the request on behalf of. Used for multi-tenant cache implementations where artifacts are scoped to teams."
+                },
+                {
+                  "disabled": false,
+                  "key": "slug",
+                  "value": "<string>",
+                  "description": "The team slug to perform the request on behalf of. Alternative to `teamId` for identifying the team."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "Hostname and port of the remote cache server",
+                  "type": "any",
+                  "value": "{{host}}",
+                  "key": "host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f98db032-39a9-49c6-af36-d21b7579d7cb",
+              "name": "Remote caching status retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"paused\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e120953-e0a8-42eb-8948-f7b4a6184760",
+              "name": "Bad request. One or more of the provided values in the request query, headers, or body is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "86c65d0a-8163-40d3-b4da-1bb9a047ce06",
+              "name": "Unauthorized. The request is missing a valid authentication token or the token is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "708831b5-b1eb-4bd5-841b-cfb5573920fc",
+              "name": "Forbidden. The authenticated user does not have permission to access this resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8c1317cf-364c-4c7c-ad67-8646a346913f",
+          "name": "Check if artifact exists",
+          "request": {
+            "name": "Check if artifact exists",
+            "description": {
+              "content": "Check that a cache artifact with the given `hash` exists. This request returns response headers only and is equivalent to a `GET` request to this endpoint where the response contains no body.\n\nImplementers should return 200 if the artifact exists, or 404 if it does not.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "artifacts",
+                ":hash"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "The team identifier to perform the request on behalf of. Used for multi-tenant cache implementations where artifacts are scoped to teams."
+                },
+                {
+                  "disabled": false,
+                  "key": "slug",
+                  "value": "<string>",
+                  "description": "The team slug to perform the request on behalf of. Alternative to `teamId` for identifying the team."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "hash",
+                  "description": "(Required) The artifact hash. This is a content-addressable hash that uniquely identifies the cached artifact based on task inputs."
+                },
+                {
+                  "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "Hostname and port of the remote cache server",
+                  "type": "any",
+                  "value": "{{host}}",
+                  "key": "host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "HEAD",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "51bd53c5-3c84-4f41-8190-02aef6a07fcd",
+              "name": "Artifact exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts",
+                    ":hash"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hash",
+                      "description": "(Required) The artifact hash. This is a content-addressable hash that uniquely identifies the cached artifact based on task inputs."
+                    },
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "HEAD",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The size of the artifact in bytes",
+                  "key": "Content-Length",
+                  "value": "3180"
+                },
+                {
+                  "disabled": false,
+                  "description": "The time taken to generate the artifact in milliseconds (if stored)",
+                  "key": "x-artifact-duration",
+                  "value": "3180"
+                },
+                {
+                  "disabled": false,
+                  "description": "The git SHA of the commit that produced this artifact (if stored)",
+                  "key": "x-artifact-sha",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "A hash summarizing uncommitted changes in the working tree when this artifact was produced (if stored)",
+                  "key": "x-artifact-dirty-hash",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6cc9581f-ecf3-4f10-a3b9-84bfa7677e7b",
+              "name": "Bad request. One or more of the provided values in the request query, headers, or body is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts",
+                    ":hash"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hash",
+                      "description": "(Required) The artifact hash. This is a content-addressable hash that uniquely identifies the cached artifact based on task inputs."
+                    },
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "HEAD",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b6815098-c3e6-4bd4-816d-148c0b44c75c",
+              "name": "Unauthorized. The request is missing a valid authentication token or the token is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts",
+                    ":hash"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hash",
+                      "description": "(Required) The artifact hash. This is a content-addressable hash that uniquely identifies the cached artifact based on task inputs."
+                    },
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "HEAD",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "28cddfad-f0ed-41f3-9a16-239f1f2d8319",
+              "name": "Forbidden. The authenticated user does not have permission to access this resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts",
+                    ":hash"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hash",
+                      "description": "(Required) The artifact hash. This is a content-addressable hash that uniquely identifies the cached artifact based on task inputs."
+                    },
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "HEAD",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a5c040de-0e9c-4162-acfe-a06f9241ef0f",
+              "name": "Artifact not found. No artifact with the specified hash exists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts",
+                    ":hash"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hash",
+                      "description": "(Required) The artifact hash. This is a content-addressable hash that uniquely identifies the cached artifact based on task inputs."
+                    },
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "HEAD",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0b6bfc0b-1d5c-4c70-84fc-624a2477d7ae",
+          "name": "Download a cache artifact",
+          "request": {
+            "name": "Download a cache artifact",
+            "description": {
+              "content": "Downloads a cache artifact identified by its `hash` specified on the request path. The artifact is downloaded as an octet-stream (binary data).\n\nThe artifact data is a gzip-compressed tarball containing the cached task outputs. The client will verify the content-length header against the response body size.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "artifacts",
+                ":hash"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "The team identifier to perform the request on behalf of. Used for multi-tenant cache implementations where artifacts are scoped to teams."
+                },
+                {
+                  "disabled": false,
+                  "key": "slug",
+                  "value": "<string>",
+                  "description": "The team slug to perform the request on behalf of. Alternative to `teamId` for identifying the team."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "hash",
+                  "description": "(Required) The artifact hash. This is a content-addressable hash that uniquely identifies the cached artifact based on task inputs."
+                },
+                {
+                  "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "Hostname and port of the remote cache server",
+                  "type": "any",
+                  "value": "{{host}}",
+                  "key": "host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The continuous integration or delivery environment where this artifact operation is being performed. Examples: `github-actions`, `circleci`, `jenkins`.",
+                "key": "x-artifact-client-ci",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Indicates whether the client is running in an interactive shell. `1` for interactive, `0` for non-interactive (CI/scripts).",
+                "key": "x-artifact-client-interactive",
+                "value": "<integer>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e733552c-11da-4676-b956-188689e18d4f",
+              "name": "Artifact downloaded successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts",
+                    ":hash"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hash",
+                      "description": "(Required) The artifact hash. This is a content-addressable hash that uniquely identifies the cached artifact based on task inputs."
+                    },
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The continuous integration or delivery environment where this artifact operation is being performed. Examples: `github-actions`, `circleci`, `jenkins`.",
+                    "key": "x-artifact-client-ci",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Indicates whether the client is running in an interactive shell. `1` for interactive, `0` for non-interactive (CI/scripts).",
+                    "key": "x-artifact-client-interactive",
+                    "value": "<integer>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The size of the artifact in bytes",
+                  "key": "Content-Length",
+                  "value": "3180"
+                },
+                {
+                  "disabled": false,
+                  "description": "The time taken to generate the artifact in milliseconds",
+                  "key": "x-artifact-duration",
+                  "value": "3180"
+                },
+                {
+                  "disabled": false,
+                  "description": "The signature/tag of the artifact for verification. This value was provided during upload and can be used by the client to verify artifact integrity.",
+                  "key": "x-artifact-tag",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The git SHA of the commit that produced this artifact. This value was provided during upload.",
+                  "key": "x-artifact-sha",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "A hash summarizing uncommitted changes in the working tree when this artifact was produced. This value was provided during upload.",
+                  "key": "x-artifact-dirty-hash",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "425ebea4-22a0-4de0-a694-a64072ce9aad",
+              "name": "Bad request. One or more of the provided values in the request query, headers, or body is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts",
+                    ":hash"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hash",
+                      "description": "(Required) The artifact hash. This is a content-addressable hash that uniquely identifies the cached artifact based on task inputs."
+                    },
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The continuous integration or delivery environment where this artifact operation is being performed. Examples: `github-actions`, `circleci`, `jenkins`.",
+                    "key": "x-artifact-client-ci",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Indicates whether the client is running in an interactive shell. `1` for interactive, `0` for non-interactive (CI/scripts).",
+                    "key": "x-artifact-client-interactive",
+                    "value": "<integer>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d4115c73-d154-48ff-a568-7288a945edaf",
+              "name": "Unauthorized. The request is missing a valid authentication token or the token is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts",
+                    ":hash"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hash",
+                      "description": "(Required) The artifact hash. This is a content-addressable hash that uniquely identifies the cached artifact based on task inputs."
+                    },
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The continuous integration or delivery environment where this artifact operation is being performed. Examples: `github-actions`, `circleci`, `jenkins`.",
+                    "key": "x-artifact-client-ci",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Indicates whether the client is running in an interactive shell. `1` for interactive, `0` for non-interactive (CI/scripts).",
+                    "key": "x-artifact-client-interactive",
+                    "value": "<integer>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "38ce2764-0fbd-4f48-8da6-97fbc2ff5afe",
+              "name": "Forbidden. The authenticated user does not have permission to access this resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts",
+                    ":hash"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hash",
+                      "description": "(Required) The artifact hash. This is a content-addressable hash that uniquely identifies the cached artifact based on task inputs."
+                    },
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The continuous integration or delivery environment where this artifact operation is being performed. Examples: `github-actions`, `circleci`, `jenkins`.",
+                    "key": "x-artifact-client-ci",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Indicates whether the client is running in an interactive shell. `1` for interactive, `0` for non-interactive (CI/scripts).",
+                    "key": "x-artifact-client-interactive",
+                    "value": "<integer>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1bec32a1-79d6-4990-a2d0-0ab3b4a532ca",
+              "name": "Artifact not found. No artifact with the specified hash exists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts",
+                    ":hash"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hash",
+                      "description": "(Required) The artifact hash. This is a content-addressable hash that uniquely identifies the cached artifact based on task inputs."
+                    },
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The continuous integration or delivery environment where this artifact operation is being performed. Examples: `github-actions`, `circleci`, `jenkins`.",
+                    "key": "x-artifact-client-ci",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Indicates whether the client is running in an interactive shell. `1` for interactive, `0` for non-interactive (CI/scripts).",
+                    "key": "x-artifact-client-interactive",
+                    "value": "<integer>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c754c92c-88fe-4429-903d-ffeea4de3242",
+          "name": "Upload a cache artifact",
+          "request": {
+            "name": "Upload a cache artifact",
+            "description": {
+              "content": "Uploads a cache artifact identified by the `hash` specified on the path. The cache artifact can then be downloaded with the provided `hash`.\n\nThe request body should contain a gzip-compressed tarball of the task outputs. The server should store this data and make it available for subsequent downloads.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "artifacts",
+                ":hash"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "The team identifier to perform the request on behalf of. Used for multi-tenant cache implementations where artifacts are scoped to teams."
+                },
+                {
+                  "disabled": false,
+                  "key": "slug",
+                  "value": "<string>",
+                  "description": "The team slug to perform the request on behalf of. Alternative to `teamId` for identifying the team."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "hash",
+                  "description": "(Required) The artifact hash. This is a content-addressable hash that uniquely identifies the cached artifact based on task inputs."
+                },
+                {
+                  "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "Hostname and port of the remote cache server",
+                  "type": "any",
+                  "value": "{{host}}",
+                  "key": "host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The artifact size in bytes",
+                "key": "Content-Length",
+                "value": "<integer>"
+              },
+              {
+                "disabled": false,
+                "description": "The time taken to generate the artifact in milliseconds. This value is stored and returned when the artifact is downloaded.",
+                "key": "x-artifact-duration",
+                "value": "<integer>"
+              },
+              {
+                "disabled": false,
+                "description": "A base64-encoded tag for this artifact, typically used for verification. This value is stored and returned when the artifact is downloaded via the `x-artifact-tag` response header.",
+                "key": "x-artifact-tag",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "The git SHA of the HEAD commit at the time this artifact was produced. This value is stored and returned when the artifact is downloaded or checked via the `x-artifact-sha` response header.",
+                "key": "x-artifact-sha",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "A hash summarizing all uncommitted changes (staged, unstaged, and untracked files) in the working tree when this artifact was produced. This value is stored and returned when the artifact is downloaded or checked via the `x-artifact-dirty-hash` response header.",
+                "key": "x-artifact-dirty-hash",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "The continuous integration or delivery environment where this artifact operation is being performed. Examples: `github-actions`, `circleci`, `jenkins`.",
+                "key": "x-artifact-client-ci",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Indicates whether the client is running in an interactive shell. `1` for interactive, `0` for non-interactive (CI/scripts).",
+                "key": "x-artifact-client-interactive",
+                "value": "<integer>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/octet-stream"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "file"
+            }
+          },
+          "response": [
+            {
+              "id": "2ebc2060-a70a-4d7e-bc68-55c21c0f35c5",
+              "name": "Artifact uploaded successfully (alternative success response)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts",
+                    ":hash"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hash",
+                      "description": "(Required) The artifact hash. This is a content-addressable hash that uniquely identifies the cached artifact based on task inputs."
+                    },
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The artifact size in bytes",
+                    "key": "Content-Length",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The time taken to generate the artifact in milliseconds. This value is stored and returned when the artifact is downloaded.",
+                    "key": "x-artifact-duration",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A base64-encoded tag for this artifact, typically used for verification. This value is stored and returned when the artifact is downloaded via the `x-artifact-tag` response header.",
+                    "key": "x-artifact-tag",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The git SHA of the HEAD commit at the time this artifact was produced. This value is stored and returned when the artifact is downloaded or checked via the `x-artifact-sha` response header.",
+                    "key": "x-artifact-sha",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A hash summarizing all uncommitted changes (staged, unstaged, and untracked files) in the working tree when this artifact was produced. This value is stored and returned when the artifact is downloaded or checked via the `x-artifact-dirty-hash` response header.",
+                    "key": "x-artifact-dirty-hash",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The continuous integration or delivery environment where this artifact operation is being performed. Examples: `github-actions`, `circleci`, `jenkins`.",
+                    "key": "x-artifact-client-ci",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Indicates whether the client is running in an interactive shell. `1` for interactive, `0` for non-interactive (CI/scripts).",
+                    "key": "x-artifact-client-interactive",
+                    "value": "<integer>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"urls\": [\n    \"https://nztNNeFavpcamlaPTgdxM.ujezLRbF1niFtwSXntbz5oMpuXGaUIWUL3y.m,pZbDwM75iEaBwLGdXiX\",\n    \"https://xDArPMiyWkMwqeQVT.nvqbhlhD4G1VmVp2U1wApM+Kr\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "45de54ca-cef7-4fd9-8eed-aa817003918f",
+              "name": "Artifact accepted for storage",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts",
+                    ":hash"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hash",
+                      "description": "(Required) The artifact hash. This is a content-addressable hash that uniquely identifies the cached artifact based on task inputs."
+                    },
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The artifact size in bytes",
+                    "key": "Content-Length",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The time taken to generate the artifact in milliseconds. This value is stored and returned when the artifact is downloaded.",
+                    "key": "x-artifact-duration",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A base64-encoded tag for this artifact, typically used for verification. This value is stored and returned when the artifact is downloaded via the `x-artifact-tag` response header.",
+                    "key": "x-artifact-tag",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The git SHA of the HEAD commit at the time this artifact was produced. This value is stored and returned when the artifact is downloaded or checked via the `x-artifact-sha` response header.",
+                    "key": "x-artifact-sha",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A hash summarizing all uncommitted changes (staged, unstaged, and untracked files) in the working tree when this artifact was produced. This value is stored and returned when the artifact is downloaded or checked via the `x-artifact-dirty-hash` response header.",
+                    "key": "x-artifact-dirty-hash",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The continuous integration or delivery environment where this artifact operation is being performed. Examples: `github-actions`, `circleci`, `jenkins`.",
+                    "key": "x-artifact-client-ci",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Indicates whether the client is running in an interactive shell. `1` for interactive, `0` for non-interactive (CI/scripts).",
+                    "key": "x-artifact-client-interactive",
+                    "value": "<integer>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"urls\": [\n    \"https://ZzaHZw.mdnslZdqKimhQb8D7iuwoYh4yyi+06KT+NvHAOw7-JUuQ4gbbBqhvKWUOFLc17Qm\",\n    \"http://ryrAdVklbLqvcVpUjTmjBNBLuzauX.jfvJZCxxTdfTH9pqGeF0,ePokn8Hsxzi-fLnD2wAY9F+VE94oe+Pk7bFxFeeRGHB-JdmQPiV6nmb3LXK\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "533cfa9e-8293-467c-833d-5e82b3b06be7",
+              "name": "Bad request. One or more of the provided values in the request query, headers, or body is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts",
+                    ":hash"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hash",
+                      "description": "(Required) The artifact hash. This is a content-addressable hash that uniquely identifies the cached artifact based on task inputs."
+                    },
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The artifact size in bytes",
+                    "key": "Content-Length",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The time taken to generate the artifact in milliseconds. This value is stored and returned when the artifact is downloaded.",
+                    "key": "x-artifact-duration",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A base64-encoded tag for this artifact, typically used for verification. This value is stored and returned when the artifact is downloaded via the `x-artifact-tag` response header.",
+                    "key": "x-artifact-tag",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The git SHA of the HEAD commit at the time this artifact was produced. This value is stored and returned when the artifact is downloaded or checked via the `x-artifact-sha` response header.",
+                    "key": "x-artifact-sha",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A hash summarizing all uncommitted changes (staged, unstaged, and untracked files) in the working tree when this artifact was produced. This value is stored and returned when the artifact is downloaded or checked via the `x-artifact-dirty-hash` response header.",
+                    "key": "x-artifact-dirty-hash",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The continuous integration or delivery environment where this artifact operation is being performed. Examples: `github-actions`, `circleci`, `jenkins`.",
+                    "key": "x-artifact-client-ci",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Indicates whether the client is running in an interactive shell. `1` for interactive, `0` for non-interactive (CI/scripts).",
+                    "key": "x-artifact-client-interactive",
+                    "value": "<integer>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1d09e66-18a0-479a-ac58-5c9ab8b9f573",
+              "name": "Unauthorized. The request is missing a valid authentication token or the token is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts",
+                    ":hash"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hash",
+                      "description": "(Required) The artifact hash. This is a content-addressable hash that uniquely identifies the cached artifact based on task inputs."
+                    },
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The artifact size in bytes",
+                    "key": "Content-Length",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The time taken to generate the artifact in milliseconds. This value is stored and returned when the artifact is downloaded.",
+                    "key": "x-artifact-duration",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A base64-encoded tag for this artifact, typically used for verification. This value is stored and returned when the artifact is downloaded via the `x-artifact-tag` response header.",
+                    "key": "x-artifact-tag",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The git SHA of the HEAD commit at the time this artifact was produced. This value is stored and returned when the artifact is downloaded or checked via the `x-artifact-sha` response header.",
+                    "key": "x-artifact-sha",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A hash summarizing all uncommitted changes (staged, unstaged, and untracked files) in the working tree when this artifact was produced. This value is stored and returned when the artifact is downloaded or checked via the `x-artifact-dirty-hash` response header.",
+                    "key": "x-artifact-dirty-hash",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The continuous integration or delivery environment where this artifact operation is being performed. Examples: `github-actions`, `circleci`, `jenkins`.",
+                    "key": "x-artifact-client-ci",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Indicates whether the client is running in an interactive shell. `1` for interactive, `0` for non-interactive (CI/scripts).",
+                    "key": "x-artifact-client-interactive",
+                    "value": "<integer>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e57d217-4427-4980-b880-0b6178ce8f48",
+              "name": "Forbidden. The authenticated user does not have permission to access this resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts",
+                    ":hash"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hash",
+                      "description": "(Required) The artifact hash. This is a content-addressable hash that uniquely identifies the cached artifact based on task inputs."
+                    },
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The artifact size in bytes",
+                    "key": "Content-Length",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The time taken to generate the artifact in milliseconds. This value is stored and returned when the artifact is downloaded.",
+                    "key": "x-artifact-duration",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A base64-encoded tag for this artifact, typically used for verification. This value is stored and returned when the artifact is downloaded via the `x-artifact-tag` response header.",
+                    "key": "x-artifact-tag",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The git SHA of the HEAD commit at the time this artifact was produced. This value is stored and returned when the artifact is downloaded or checked via the `x-artifact-sha` response header.",
+                    "key": "x-artifact-sha",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A hash summarizing all uncommitted changes (staged, unstaged, and untracked files) in the working tree when this artifact was produced. This value is stored and returned when the artifact is downloaded or checked via the `x-artifact-dirty-hash` response header.",
+                    "key": "x-artifact-dirty-hash",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The continuous integration or delivery environment where this artifact operation is being performed. Examples: `github-actions`, `circleci`, `jenkins`.",
+                    "key": "x-artifact-client-ci",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Indicates whether the client is running in an interactive shell. `1` for interactive, `0` for non-interactive (CI/scripts).",
+                    "key": "x-artifact-client-interactive",
+                    "value": "<integer>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3b712b19-2451-4db0-acfe-65c6b9264a3e",
+          "name": "Query artifact information",
+          "request": {
+            "name": "Query artifact information",
+            "description": {
+              "content": "Query information about multiple artifacts by their hashes. Returns metadata about each artifact including size, task duration, and tag.\n\nThis endpoint is optional for basic cache functionality but enables optimized cache fetching by allowing the client to query multiple artifacts in a single request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "artifacts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "The team identifier to perform the request on behalf of. Used for multi-tenant cache implementations where artifacts are scoped to teams."
+                },
+                {
+                  "disabled": false,
+                  "key": "slug",
+                  "value": "<string>",
+                  "description": "The team slug to perform the request on behalf of. Alternative to `teamId` for identifying the team."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "Hostname and port of the remote cache server",
+                  "type": "any",
+                  "value": "{{host}}",
+                  "key": "host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"hashes\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "352fe0fd-9485-4649-9c30-791034acd993",
+              "name": "Artifact information retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"hashes\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": {\n    \"size\": 9497,\n    \"taskDurationMs\": 7755,\n    \"tag\": \"string\"\n  },\n  \"key_1\": {\n    \"size\": 2638,\n    \"taskDurationMs\": 8867,\n    \"tag\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1ec856d5-d5d2-4605-bf2d-d126bbdfda83",
+              "name": "Bad request. One or more of the provided values in the request query, headers, or body is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"hashes\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0495abba-8628-446d-a796-0835a9b73f61",
+              "name": "Unauthorized. The request is missing a valid authentication token or the token is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"hashes\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91827637-9bcb-4ca5-b379-cd872120c6a2",
+              "name": "Forbidden. The authenticated user does not have permission to access this resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"hashes\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "17240129-fdc3-4642-b0b4-a8db348d12f7",
+      "name": "analytics",
+      "description": {
+        "content": "Operations for recording cache usage analytics",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "35a22f22-a31d-49db-aa66-9148f2af5ac7",
+          "name": "Record cache usage events",
+          "request": {
+            "name": "Record cache usage events",
+            "description": {
+              "content": "Records cache usage analytics events. The body of this request is an array of cache usage events.\n\nThis endpoint is optional but enables cache hit/miss analytics. Implementers can use this data to track cache effectiveness and optimize storage.\n\nEvent types:\n- `HIT`: A cached artifact was found and used\n- `MISS`: No cached artifact was found for the given hash\n\nSource types:\n- `LOCAL`: The cache event was on the user's local filesystem cache\n- `REMOTE`: The cache event is for the remote cache",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "artifacts",
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "The team identifier to perform the request on behalf of. Used for multi-tenant cache implementations where artifacts are scoped to teams."
+                },
+                {
+                  "disabled": false,
+                  "key": "slug",
+                  "value": "<string>",
+                  "description": "The team slug to perform the request on behalf of. Alternative to `teamId` for identifying the team."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                  "type": "any",
+                  "value": "{{protocol}}",
+                  "key": "protocol"
+                },
+                {
+                  "description": "Hostname and port of the remote cache server",
+                  "type": "any",
+                  "value": "{{host}}",
+                  "key": "host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The continuous integration or delivery environment where this artifact operation is being performed. Examples: `github-actions`, `circleci`, `jenkins`.",
+                "key": "x-artifact-client-ci",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Indicates whether the client is running in an interactive shell. `1` for interactive, `0` for non-interactive (CI/scripts).",
+                "key": "x-artifact-client-interactive",
+                "value": "<integer>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"sessionId\": \"<uuid>\",\n    \"source\": \"<string>\",\n    \"event\": \"<string>\",\n    \"hash\": \"<string>\",\n    \"duration\": \"<integer>\"\n  },\n  {\n    \"sessionId\": \"<uuid>\",\n    \"source\": \"<string>\",\n    \"event\": \"<string>\",\n    \"hash\": \"<string>\",\n    \"duration\": \"<integer>\"\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c98dd2dc-383b-4cd7-8021-a3902d22bbfb",
+              "name": "Events recorded successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The continuous integration or delivery environment where this artifact operation is being performed. Examples: `github-actions`, `circleci`, `jenkins`.",
+                    "key": "x-artifact-client-ci",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Indicates whether the client is running in an interactive shell. `1` for interactive, `0` for non-interactive (CI/scripts).",
+                    "key": "x-artifact-client-interactive",
+                    "value": "<integer>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"sessionId\": \"<uuid>\",\n    \"source\": \"<string>\",\n    \"event\": \"<string>\",\n    \"hash\": \"<string>\",\n    \"duration\": \"<integer>\"\n  },\n  {\n    \"sessionId\": \"<uuid>\",\n    \"source\": \"<string>\",\n    \"event\": \"<string>\",\n    \"hash\": \"<string>\",\n    \"duration\": \"<integer>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2d2b1132-d0c4-400e-90ec-92da757d8833",
+              "name": "Bad request. One or more of the provided values in the request query, headers, or body is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The continuous integration or delivery environment where this artifact operation is being performed. Examples: `github-actions`, `circleci`, `jenkins`.",
+                    "key": "x-artifact-client-ci",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Indicates whether the client is running in an interactive shell. `1` for interactive, `0` for non-interactive (CI/scripts).",
+                    "key": "x-artifact-client-interactive",
+                    "value": "<integer>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"sessionId\": \"<uuid>\",\n    \"source\": \"<string>\",\n    \"event\": \"<string>\",\n    \"hash\": \"<string>\",\n    \"duration\": \"<integer>\"\n  },\n  {\n    \"sessionId\": \"<uuid>\",\n    \"source\": \"<string>\",\n    \"event\": \"<string>\",\n    \"hash\": \"<string>\",\n    \"duration\": \"<integer>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5ee9de72-4f60-44c9-af63-cbd72f63d076",
+              "name": "Unauthorized. The request is missing a valid authentication token or the token is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The continuous integration or delivery environment where this artifact operation is being performed. Examples: `github-actions`, `circleci`, `jenkins`.",
+                    "key": "x-artifact-client-ci",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Indicates whether the client is running in an interactive shell. `1` for interactive, `0` for non-interactive (CI/scripts).",
+                    "key": "x-artifact-client-interactive",
+                    "value": "<integer>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"sessionId\": \"<uuid>\",\n    \"source\": \"<string>\",\n    \"event\": \"<string>\",\n    \"hash\": \"<string>\",\n    \"duration\": \"<integer>\"\n  },\n  {\n    \"sessionId\": \"<uuid>\",\n    \"source\": \"<string>\",\n    \"event\": \"<string>\",\n    \"hash\": \"<string>\",\n    \"duration\": \"<integer>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "482177a0-db26-4012-86a4-36d2b121695f",
+              "name": "Forbidden. The authenticated user does not have permission to access this resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "artifacts",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Protocol to use for the remote cache server (This can only be one of http,https)",
+                      "type": "any",
+                      "value": "{{protocol}}",
+                      "key": "protocol"
+                    },
+                    {
+                      "description": "Hostname and port of the remote cache server",
+                      "type": "any",
+                      "value": "{{host}}",
+                      "key": "host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The continuous integration or delivery environment where this artifact operation is being performed. Examples: `github-actions`, `circleci`, `jenkins`.",
+                    "key": "x-artifact-client-ci",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Indicates whether the client is running in an interactive shell. `1` for interactive, `0` for non-interactive (CI/scripts).",
+                    "key": "x-artifact-client-interactive",
+                    "value": "<integer>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"sessionId\": \"<uuid>\",\n    \"source\": \"<string>\",\n    \"event\": \"<string>\",\n    \"hash\": \"<string>\",\n    \"duration\": \"<integer>\"\n  },\n  {\n    \"sessionId\": \"<uuid>\",\n    \"source\": \"<string>\",\n    \"event\": \"<string>\",\n    \"hash\": \"<string>\",\n    \"duration\": \"<integer>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Protocol to use for the remote cache server (This can only be one of http,https)",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "https",
+      "key": "protocol"
+    },
+    {
+      "description": {
+        "content": "Hostname and port of the remote cache server",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "localhost:3000",
+      "key": "host"
+    },
+    {
+      "type": "string",
+      "value": "{{protocol}}://{{host}}",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a4feacc3-657e-4d34-bd31-39a3ed0b23f8",
+    "name": "Turborepo Remote Cache API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Turborepo Remote Cache API specification defines the HTTP interface that any remote cache server must implement to be compatible with Turborepo. This spec enables self-hosted remote caching, allowing teams to run their own cache servers.\n\nThe remote cache stores build artifacts (outputs from tasks like `build`, `lint`, `test`) identified by content-addressable hashes. When Turborepo encounters a task that matches a previously cached result, it can download the artifact instead of re-executing the task.\n\nContact Support:\n Name: Turborepo",
+      "type": "text/plain"
+    }
+  }
+}
