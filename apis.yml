@@ -112,7 +112,7 @@ common:
   name: Vercel Tokens
   type: Authentication
 - url: https://github.com/vercel/turborepo/discussions
-  type: Forum
+  type: Forums
 - url: https://x.com/turborepo
   type: X
 - url: https://bsky.app/profile/turborepo.com
