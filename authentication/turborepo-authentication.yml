@@ -1,0 +1,19 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/turborepo-remote-cache-api-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerToken
+  type: http
+  scheme: bearer
+  description: |-
+    Bearer token authentication. Pass your authentication token in the `Authorization` header as `Bearer <token>`.
+
+    For self-hosted implementations, the token format and validation logic is up to the implementer. Common approaches include:
+    - Static tokens for simple setups
+    - JWT tokens for stateless authentication
+    - OAuth2 tokens for integration with identity providers
+  sources:
+  - openapi/turborepo-remote-cache-api-openapi.yml
