@@ -1,0 +1,202 @@
+openapi: 3.0.3
+info:
+  title: Turborepo Remote Cache analytics API
+  description: 'The Turborepo Remote Cache API specification defines the HTTP interface that any remote cache server must implement to be compatible with Turborepo. This spec enables self-hosted remote caching, allowing teams to run their own cache servers.
+
+
+    The remote cache stores build artifacts (outputs from tasks like `build`, `lint`, `test`) identified by content-addressable hashes. When Turborepo encounters a task that matches a previously cached result, it can download the artifact instead of re-executing the task.'
+  version: 1.0.0
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  contact:
+    name: Turborepo
+    url: https://turbo.build
+servers:
+- url: '{protocol}://{host}'
+  description: Self-hosted Remote Cache Server
+  variables:
+    protocol:
+      default: https
+      enum:
+      - http
+      - https
+      description: Protocol to use for the remote cache server
+    host:
+      default: localhost:3000
+      description: Hostname and port of the remote cache server
+- url: https://api.vercel.com
+  description: 'Vercel Remote Cache (reference implementation) (spec: https://openapi.vercel.com)'
+tags:
+- name: analytics
+  description: Operations for recording cache usage analytics
+paths:
+  /artifacts/events:
+    post:
+      operationId: recordCacheEvents
+      summary: Record cache usage events
+      description: 'Records cache usage analytics events. The body of this request is an array of cache usage events.
+
+
+        This endpoint is optional but enables cache hit/miss analytics. Implementers can use this data to track cache effectiveness and optimize storage.
+
+
+        Event types:
+
+        - `HIT`: A cached artifact was found and used
+
+        - `MISS`: No cached artifact was found for the given hash
+
+
+        Source types:
+
+        - `LOCAL`: The cache event was on the user''s local filesystem cache
+
+        - `REMOTE`: The cache event is for the remote cache'
+      tags:
+      - analytics
+      security:
+      - bearerToken: []
+      parameters:
+      - $ref: '#/components/parameters/ArtifactClientCI'
+      - $ref: '#/components/parameters/ArtifactClientInteractive'
+      - $ref: '#/components/parameters/TeamId'
+      - $ref: '#/components/parameters/Slug'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CacheEvent'
+      responses:
+        '200':
+          description: Events recorded successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  parameters:
+    ArtifactClientInteractive:
+      name: x-artifact-client-interactive
+      in: header
+      required: false
+      description: Indicates whether the client is running in an interactive shell. `1` for interactive, `0` for non-interactive (CI/scripts).
+      schema:
+        type: integer
+        enum:
+        - 0
+        - 1
+    TeamId:
+      name: teamId
+      in: query
+      required: false
+      description: The team identifier to perform the request on behalf of. Used for multi-tenant cache implementations where artifacts are scoped to teams.
+      schema:
+        type: string
+    Slug:
+      name: slug
+      in: query
+      required: false
+      description: The team slug to perform the request on behalf of. Alternative to `teamId` for identifying the team.
+      schema:
+        type: string
+    ArtifactClientCI:
+      name: x-artifact-client-ci
+      in: header
+      required: false
+      description: 'The continuous integration or delivery environment where this artifact operation is being performed. Examples: `github-actions`, `circleci`, `jenkins`.'
+      schema:
+        type: string
+        maxLength: 50
+  responses:
+    Forbidden:
+      description: Forbidden. The authenticated user does not have permission to access this resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. The request is missing a valid authentication token or the token is invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. One or more of the provided values in the request query, headers, or body is invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    CacheEvent:
+      type: object
+      required:
+      - sessionId
+      - source
+      - event
+      - hash
+      properties:
+        sessionId:
+          type: string
+          format: uuid
+          description: A UUID that identifies the Turborepo session that generated this event
+        source:
+          type: string
+          enum:
+          - LOCAL
+          - REMOTE
+          description: 'The source of the cache event.
+
+
+            - `LOCAL`: The event occurred on the user''s local filesystem cache
+
+            - `REMOTE`: The event is for the remote cache'
+        event:
+          type: string
+          enum:
+          - HIT
+          - MISS
+          description: 'The type of cache event.
+
+
+            - `HIT`: A cached artifact was found
+
+            - `MISS`: No cached artifact was found'
+        hash:
+          type: string
+          description: The artifact hash associated with this event
+        duration:
+          type: integer
+          minimum: 0
+          description: The time taken to generate the artifact in milliseconds. Only meaningful for `HIT` events.
+    Error:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+          description: A machine-readable error code
+        message:
+          type: string
+          description: A human-readable error message
+  securitySchemes:
+    bearerToken:
+      type: http
+      scheme: bearer
+      description: 'Bearer token authentication. Pass your authentication token in the `Authorization` header as `Bearer <token>`.
+
+
+        For self-hosted implementations, the token format and validation logic is up to the implementer. Common approaches include:
+
+        - Static tokens for simple setups
+
+        - JWT tokens for stateless authentication
+
+        - OAuth2 tokens for integration with identity providers'
