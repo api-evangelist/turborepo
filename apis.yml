@@ -1,27 +1,36 @@
 aid: turborepo
 url: https://raw.githubusercontent.com/api-evangelist/turborepo/refs/heads/main/apis.yml
 apis:
-- aid: turborepo:turborepo-remote-cache-api
-  name: Turborepo Remote Cache API
-  tags:
-  - Build System
-  - Caching
-  - Monorepo
-  - Remote Cache
-  - Artifacts
+- aid: turborepo:turborepo-analytics-api
+  name: Turborepo analytics API
+  description: Operations for recording cache usage analytics
   humanURL: https://turborepo.dev/docs/core-concepts/remote-caching
+  tags:
+  - analytics
   properties:
-  - url: https://turborepo.dev/docs/core-concepts/remote-caching
-    type: Documentation
-  - url: https://turborepo.dev/docs/openapi
-    type: Documentation
-  - url: https://turborepo.dev/api/remote-cache-spec
-    type: OpenAPI
-  - url: openapi/turborepo-remote-cache-api-openapi.yml
-    type: OpenAPI
-  - url: graphql/turborepo-graphql.md
-    type: GraphQL
-  description: The Turborepo Remote Cache API specification defines the HTTP interface that any remote cache server must implement to be compatible with Turborepo. The remote cache stores build artifacts (outputs from tasks like build, lint, test) identified by content-addressable hashes. Endpoints cover artifact upload (PUT /artifacts/{hash}), download (GET /artifacts/{hash}), existence checks (HEAD), batch queries (POST /artifacts), status (/artifacts/status), and analytics events (POST /artifacts/events). The Vercel Remote Cache at api.vercel.com is the reference implementation; teams may self-host their own remote cache server (e.g. ducktors/ turborepo-remote-cache).
+  - type: OpenAPI
+    url: openapi/turborepo-analytics-api-openapi.yml
+  - type: Documentation
+    url: https://turborepo.dev/docs/core-concepts/remote-caching
+  - type: Documentation
+    url: https://turborepo.dev/docs/openapi
+  - type: GraphQL
+    url: graphql/turborepo-graphql.md
+- aid: turborepo:turborepo-artifacts-api
+  name: Turborepo artifacts API
+  description: Operations for managing cache artifacts
+  humanURL: https://turborepo.dev/docs/core-concepts/remote-caching
+  tags:
+  - artifacts
+  properties:
+  - type: OpenAPI
+    url: openapi/turborepo-artifacts-api-openapi.yml
+  - type: Documentation
+    url: https://turborepo.dev/docs/core-concepts/remote-caching
+  - type: Documentation
+    url: https://turborepo.dev/docs/openapi
+  - type: GraphQL
+    url: graphql/turborepo-graphql.md
 name: Turborepo
 tags:
 - Build System
@@ -35,7 +44,19 @@ tags:
 - Developer Tools
 - CI/CD
 kind: contract
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/turborepo.png
 access: 3rd-Party
 common:
 - type: AgenticAccess
