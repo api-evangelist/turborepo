@@ -1,0 +1,16 @@
+{
+  "provider": "turborepo",
+  "sources": [
+    "turborepo-analytics-api-openapi.yml",
+    "turborepo-artifacts-api-openapi.yml"
+  ],
+  "outputs": [
+    "turborepo-analytics-api-openapi.yml",
+    "turborepo-artifacts-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
