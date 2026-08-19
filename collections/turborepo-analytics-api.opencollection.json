@@ -1,0 +1,61 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Turborepo Remote Cache analytics API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "analytics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Record cache usage events",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{protocol}://{host}/artifacts/events",
+            "headers": [
+              {
+                "name": "x-artifact-client-ci",
+                "value": ""
+              },
+              {
+                "name": "x-artifact-client-interactive",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "The team identifier to perform the request on behalf of. Used for multi-tenant cache implementations where artifacts are scoped to teams."
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "The team slug to perform the request on behalf of. Alternative to `teamId` for identifying the team."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Records cache usage analytics events. The body of this request is an array of cache usage events.\n\nThis endpoint is optional but enables cache hit/miss analytics. Implementers can use this data to track cache effectiveness and optimize storage.\n\nEvent types:\n- `HIT`: A cached artifact was found and used\n- `MISS`: No cached artifact was found for the given hash\n\nSource types:\n- `LOCAL`: The cache event was on the user's local filesystem cache\n- `REMOTE`: The cache event is for the remote cache"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
