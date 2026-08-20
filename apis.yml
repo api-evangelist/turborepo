@@ -6,6 +6,8 @@ apis:
   description: Operations for recording cache usage analytics
   humanURL: https://turborepo.dev/docs/core-concepts/remote-caching
   tags:
+  - Analytics
+  tags_raw:
   - analytics
   properties:
   - type: OpenAPI
@@ -21,6 +23,8 @@ apis:
   description: Operations for managing cache artifacts
   humanURL: https://turborepo.dev/docs/core-concepts/remote-caching
   tags:
+  - Artifacts
+  tags_raw:
   - artifacts
   properties:
   - type: OpenAPI
@@ -33,6 +37,17 @@ apis:
     url: graphql/turborepo-graphql.md
 name: Turborepo
 tags:
+- Build System
+- Monorepo
+- JavaScript
+- TypeScript
+- Caching
+- Open-Source
+- Rust
+- Vercel
+- Developer Tools
+- CI/CD
+tags_raw:
 - Build System
 - Monorepo
 - JavaScript
