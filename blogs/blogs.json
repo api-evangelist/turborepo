@@ -4,17 +4,18 @@
     {
       "source": "https://turborepo.dev/feed.xml",
       "feed_url": "https://turborepo.dev/feed.xml",
+      "title": "",
       "saved": 0,
-      "error": "no_feed_no_posts"
+      "method": "feed"
     },
     {
       "source": "https://turborepo.dev/blog",
-      "feed_url": "https://turborepo.dev/blog",
+      "feed_url": "https://turborepo.dev/feed.xml",
       "title": "",
       "saved": 0,
-      "method": "none"
+      "method": "discovered"
     }
   ],
   "post_count": 29,
-  "fetched": "2026-08-22T20:20:02Z"
+  "fetched": "2026-08-30T22:33:40Z"
 }
