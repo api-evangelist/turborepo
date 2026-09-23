@@ -1,10 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Turborepo Remote Cache analytics artifacts API
-  description: 'The Turborepo Remote Cache API specification defines the HTTP interface that any remote cache server must implement to be compatible with Turborepo. This spec enables self-hosted remote caching, allowing teams to run their own cache servers.
-
-
-    The remote cache stores build artifacts (outputs from tasks like `build`, `lint`, `test`) identified by content-addressable hashes. When Turborepo encounters a task that matches a previously cached result, it can download the artifact instead of re-executing the task.'
+  title: Turborepo Remote Cache Artifacts API
+  description: The Turborepo Remote Cache API specification defines the HTTP interface that any remote cache server must implement to be compatible with Turborepo.
   version: 1.0.0
   license:
     name: MIT
@@ -28,7 +25,7 @@ servers:
 - url: https://api.vercel.com
   description: 'Vercel Remote Cache (reference implementation) (spec: https://openapi.vercel.com)'
 tags:
-- name: artifacts
+- name: Artifacts
   description: Operations for managing cache artifacts
 paths:
   /artifacts/status:
@@ -40,7 +37,7 @@ paths:
 
         Implementers should return `enabled` if the authenticated principal is allowed to use the cache, or `disabled` if not. The `over_limit` and `paused` statuses are optional and can be used to indicate usage limits or temporary suspension.'
       tags:
-      - artifacts
+      - Artifacts
       security:
       - bearerToken: []
       parameters:
@@ -72,7 +69,7 @@ paths:
 
         Implementers should return 200 if the artifact exists, or 404 if it does not.'
       tags:
-      - artifacts
+      - Artifacts
       security:
       - bearerToken: []
       responses:
@@ -111,7 +108,7 @@ paths:
 
         The artifact data is a gzip-compressed tarball containing the cached task outputs. The client will verify the content-length header against the response body size.'
       tags:
-      - artifacts
+      - Artifacts
       security:
       - bearerToken: []
       parameters:
@@ -163,7 +160,7 @@ paths:
 
         The request body should contain a gzip-compressed tarball of the task outputs. The server should store this data and make it available for subsequent downloads.'
       tags:
-      - artifacts
+      - Artifacts
       security:
       - bearerToken: []
       parameters:
@@ -238,7 +235,7 @@ paths:
 
         This endpoint is optional for basic cache functionality but enables optimized cache fetching by allowing the client to query multiple artifacts in a single request.'
       tags:
-      - artifacts
+      - Artifacts
       security:
       - bearerToken: []
       parameters:
@@ -264,27 +261,74 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 components:
+  responses:
+    Forbidden:
+      description: Forbidden. The authenticated user does not have permission to access this resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. One or more of the provided values in the request query, headers, or body is invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. The request is missing a valid authentication token or the token is invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ArtifactNotFound:
+      description: Artifact not found. No artifact with the specified hash exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    Slug:
+      name: slug
+      in: query
+      required: false
+      description: The team slug to perform the request on behalf of. Alternative to `teamId` for identifying the team.
+      schema:
+        type: string
+    ArtifactClientCI:
+      name: x-artifact-client-ci
+      in: header
+      required: false
+      description: 'The continuous integration or delivery environment where this artifact operation is being performed. Examples: `github-actions`, `circleci`, `jenkins`.'
+      schema:
+        type: string
+        maxLength: 50
+    TeamId:
+      name: teamId
+      in: query
+      required: false
+      description: The team identifier to perform the request on behalf of. Used for multi-tenant cache implementations where artifacts are scoped to teams.
+      schema:
+        type: string
+    ArtifactClientInteractive:
+      name: x-artifact-client-interactive
+      in: header
+      required: false
+      description: Indicates whether the client is running in an interactive shell. `1` for interactive, `0` for non-interactive (CI/scripts).
+      schema:
+        type: integer
+        enum:
+        - 0
+        - 1
+    ArtifactHash:
+      name: hash
+      in: path
+      required: true
+      description: The artifact hash. This is a content-addressable hash that uniquely identifies the cached artifact based on task inputs.
+      schema:
+        type: string
+        pattern: ^[a-fA-F0-9]+$
+        minLength: 1
   schemas:
-    CachingStatusResponse:
-      type: object
-      required:
-      - status
-      properties:
-        status:
-          $ref: '#/components/schemas/CachingStatus'
-    ArtifactError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - message
-          properties:
-            message:
-              type: string
-              description: Error message describing why the artifact information could not be retrieved
     CachingStatus:
       type: string
       enum:
@@ -302,6 +346,66 @@ components:
         - `over_limit`: Remote caching is disabled due to usage limits (optional)
 
         - `paused`: Remote caching is temporarily paused (optional)'
+    ArtifactQueryRequest:
+      type: object
+      required:
+      - hashes
+      properties:
+        hashes:
+          type: array
+          items:
+            type: string
+          description: Array of artifact hashes to query
+    CachingStatusResponse:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          $ref: '#/components/schemas/CachingStatus'
+    ArtifactQueryResponse:
+      type: object
+      additionalProperties:
+        oneOf:
+        - $ref: '#/components/schemas/ArtifactInfo'
+        - $ref: '#/components/schemas/ArtifactError'
+      description: A map of artifact hashes to their information. The value is `null` if the artifact was not found.
+    ArtifactUploadResponse:
+      type: object
+      required:
+      - urls
+      properties:
+        urls:
+          type: array
+          items:
+            type: string
+            format: uri
+          description: Array of URLs where the artifact was stored. Implementers can return the storage location(s) for debugging purposes.
+    ArtifactError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - message
+          properties:
+            message:
+              type: string
+              description: Error message describing why the artifact information could not be retrieved
+    Error:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+          description: A machine-readable error code
+        message:
+          type: string
+          description: A human-readable error message
     ArtifactInfo:
       type: object
       required:
@@ -317,114 +421,6 @@ components:
         tag:
           type: string
           description: The artifact tag/signature for verification
-    ArtifactQueryResponse:
-      type: object
-      additionalProperties:
-        nullable: true
-        oneOf:
-        - $ref: '#/components/schemas/ArtifactInfo'
-        - $ref: '#/components/schemas/ArtifactError'
-      description: A map of artifact hashes to their information. The value is `null` if the artifact was not found.
-    Error:
-      type: object
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: string
-          description: A machine-readable error code
-        message:
-          type: string
-          description: A human-readable error message
-    ArtifactUploadResponse:
-      type: object
-      required:
-      - urls
-      properties:
-        urls:
-          type: array
-          items:
-            type: string
-            format: uri
-          description: Array of URLs where the artifact was stored. Implementers can return the storage location(s) for debugging purposes.
-    ArtifactQueryRequest:
-      type: object
-      required:
-      - hashes
-      properties:
-        hashes:
-          type: array
-          items:
-            type: string
-          description: Array of artifact hashes to query
-  parameters:
-    ArtifactClientInteractive:
-      name: x-artifact-client-interactive
-      in: header
-      required: false
-      description: Indicates whether the client is running in an interactive shell. `1` for interactive, `0` for non-interactive (CI/scripts).
-      schema:
-        type: integer
-        enum:
-        - 0
-        - 1
-    TeamId:
-      name: teamId
-      in: query
-      required: false
-      description: The team identifier to perform the request on behalf of. Used for multi-tenant cache implementations where artifacts are scoped to teams.
-      schema:
-        type: string
-    Slug:
-      name: slug
-      in: query
-      required: false
-      description: The team slug to perform the request on behalf of. Alternative to `teamId` for identifying the team.
-      schema:
-        type: string
-    ArtifactClientCI:
-      name: x-artifact-client-ci
-      in: header
-      required: false
-      description: 'The continuous integration or delivery environment where this artifact operation is being performed. Examples: `github-actions`, `circleci`, `jenkins`.'
-      schema:
-        type: string
-        maxLength: 50
-    ArtifactHash:
-      name: hash
-      in: path
-      required: true
-      description: The artifact hash. This is a content-addressable hash that uniquely identifies the cached artifact based on task inputs.
-      schema:
-        type: string
-        pattern: ^[a-fA-F0-9]+$
-        minLength: 1
-  responses:
-    Forbidden:
-      description: Forbidden. The authenticated user does not have permission to access this resource.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    ArtifactNotFound:
-      description: Artifact not found. No artifact with the specified hash exists.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. The request is missing a valid authentication token or the token is invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. One or more of the provided values in the request query, headers, or body is invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerToken:
       type: http

@@ -1,10 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Turborepo Remote Cache analytics API
-  description: 'The Turborepo Remote Cache API specification defines the HTTP interface that any remote cache server must implement to be compatible with Turborepo. This spec enables self-hosted remote caching, allowing teams to run their own cache servers.
-
-
-    The remote cache stores build artifacts (outputs from tasks like `build`, `lint`, `test`) identified by content-addressable hashes. When Turborepo encounters a task that matches a previously cached result, it can download the artifact instead of re-executing the task.'
+  title: Turborepo Remote Cache Analytics API
+  description: The Turborepo Remote Cache API specification defines the HTTP interface that any remote cache server must implement to be compatible with Turborepo.
   version: 1.0.0
   license:
     name: MIT
@@ -28,7 +25,7 @@ servers:
 - url: https://api.vercel.com
   description: 'Vercel Remote Cache (reference implementation) (spec: https://openapi.vercel.com)'
 tags:
-- name: analytics
+- name: Analytics
   description: Operations for recording cache usage analytics
 paths:
   /artifacts/events:
@@ -54,7 +51,7 @@ paths:
 
         - `REMOTE`: The cache event is for the remote cache'
       tags:
-      - analytics
+      - Analytics
       security:
       - bearerToken: []
       parameters:
@@ -80,24 +77,26 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 components:
+  responses:
+    Forbidden:
+      description: Forbidden. The authenticated user does not have permission to access this resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. One or more of the provided values in the request query, headers, or body is invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. The request is missing a valid authentication token or the token is invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
-    ArtifactClientInteractive:
-      name: x-artifact-client-interactive
-      in: header
-      required: false
-      description: Indicates whether the client is running in an interactive shell. `1` for interactive, `0` for non-interactive (CI/scripts).
-      schema:
-        type: integer
-        enum:
-        - 0
-        - 1
-    TeamId:
-      name: teamId
-      in: query
-      required: false
-      description: The team identifier to perform the request on behalf of. Used for multi-tenant cache implementations where artifacts are scoped to teams.
-      schema:
-        type: string
     Slug:
       name: slug
       in: query
@@ -113,26 +112,36 @@ components:
       schema:
         type: string
         maxLength: 50
-  responses:
-    Forbidden:
-      description: Forbidden. The authenticated user does not have permission to access this resource.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. The request is missing a valid authentication token or the token is invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. One or more of the provided values in the request query, headers, or body is invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    TeamId:
+      name: teamId
+      in: query
+      required: false
+      description: The team identifier to perform the request on behalf of. Used for multi-tenant cache implementations where artifacts are scoped to teams.
+      schema:
+        type: string
+    ArtifactClientInteractive:
+      name: x-artifact-client-interactive
+      in: header
+      required: false
+      description: Indicates whether the client is running in an interactive shell. `1` for interactive, `0` for non-interactive (CI/scripts).
+      schema:
+        type: integer
+        enum:
+        - 0
+        - 1
   schemas:
+    Error:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+          description: A machine-readable error code
+        message:
+          type: string
+          description: A human-readable error message
     CacheEvent:
       type: object
       required:
@@ -174,18 +183,6 @@ components:
           type: integer
           minimum: 0
           description: The time taken to generate the artifact in milliseconds. Only meaningful for `HIT` events.
-    Error:
-      type: object
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: string
-          description: A machine-readable error code
-        message:
-          type: string
-          description: A human-readable error message
   securitySchemes:
     bearerToken:
       type: http
