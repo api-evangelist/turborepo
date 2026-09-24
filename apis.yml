@@ -2,7 +2,7 @@ aid: turborepo
 url: https://raw.githubusercontent.com/api-evangelist/turborepo/refs/heads/main/apis.yml
 apis:
 - aid: turborepo:turborepo-analytics-api
-  name: Turborepo analytics API
+  name: Turborepo Analytics API
   description: Operations for recording cache usage analytics
   humanURL: https://turborepo.dev/docs/core-concepts/remote-caching
   tags:
@@ -16,10 +16,8 @@ apis:
     url: https://turborepo.dev/docs/core-concepts/remote-caching
   - type: Documentation
     url: https://turborepo.dev/docs/openapi
-  - type: GraphQL
-    url: graphql/turborepo-graphql.md
 - aid: turborepo:turborepo-artifacts-api
-  name: Turborepo artifacts API
+  name: Turborepo Artifacts API
   description: Operations for managing cache artifacts
   humanURL: https://turborepo.dev/docs/core-concepts/remote-caching
   tags:
@@ -33,8 +31,6 @@ apis:
     url: https://turborepo.dev/docs/core-concepts/remote-caching
   - type: Documentation
     url: https://turborepo.dev/docs/openapi
-  - type: GraphQL
-    url: graphql/turborepo-graphql.md
 name: Turborepo
 tags:
 - Build Systems
@@ -42,7 +38,7 @@ tags:
 - JavaScript
 - TypeScript
 - Caching
-- Open-Source
+- Open Source
 - Rust
 - Vercel
 - Developer Tools
@@ -58,6 +54,7 @@ tags_raw:
 - Vercel
 - Developer Tools
 - CI/CD
+- Open-Source
 kind: contract
 deliveryModel:
   model: saas
