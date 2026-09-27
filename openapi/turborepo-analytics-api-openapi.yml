@@ -84,24 +84,24 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. One or more of the provided values in the request query, headers, or body is invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Unauthorized. The request is missing a valid authentication token or the token is invalid.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. One or more of the provided values in the request query, headers, or body is invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
-    Slug:
-      name: slug
+    TeamId:
+      name: teamId
       in: query
       required: false
-      description: The team slug to perform the request on behalf of. Alternative to `teamId` for identifying the team.
+      description: The team identifier to perform the request on behalf of. Used for multi-tenant cache implementations where artifacts are scoped to teams.
       schema:
         type: string
     ArtifactClientCI:
@@ -112,13 +112,6 @@ components:
       schema:
         type: string
         maxLength: 50
-    TeamId:
-      name: teamId
-      in: query
-      required: false
-      description: The team identifier to perform the request on behalf of. Used for multi-tenant cache implementations where artifacts are scoped to teams.
-      schema:
-        type: string
     ArtifactClientInteractive:
       name: x-artifact-client-interactive
       in: header
@@ -129,19 +122,14 @@ components:
         enum:
         - 0
         - 1
+    Slug:
+      name: slug
+      in: query
+      required: false
+      description: The team slug to perform the request on behalf of. Alternative to `teamId` for identifying the team.
+      schema:
+        type: string
   schemas:
-    Error:
-      type: object
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: string
-          description: A machine-readable error code
-        message:
-          type: string
-          description: A human-readable error message
     CacheEvent:
       type: object
       required:
@@ -183,6 +171,18 @@ components:
           type: integer
           minimum: 0
           description: The time taken to generate the artifact in milliseconds. Only meaningful for `HIT` events.
+    Error:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+          description: A machine-readable error code
+        message:
+          type: string
+          description: A human-readable error message
   securitySchemes:
     bearerToken:
       type: http
