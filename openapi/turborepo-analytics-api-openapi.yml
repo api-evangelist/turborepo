@@ -77,6 +77,39 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 components:
+  parameters:
+    ArtifactClientInteractive:
+      name: x-artifact-client-interactive
+      in: header
+      required: false
+      description: Indicates whether the client is running in an interactive shell. `1` for interactive, `0` for non-interactive (CI/scripts).
+      schema:
+        type: integer
+        enum:
+        - 0
+        - 1
+    ArtifactClientCI:
+      name: x-artifact-client-ci
+      in: header
+      required: false
+      description: 'The continuous integration or delivery environment where this artifact operation is being performed. Examples: `github-actions`, `circleci`, `jenkins`.'
+      schema:
+        type: string
+        maxLength: 50
+    Slug:
+      name: slug
+      in: query
+      required: false
+      description: The team slug to perform the request on behalf of. Alternative to `teamId` for identifying the team.
+      schema:
+        type: string
+    TeamId:
+      name: teamId
+      in: query
+      required: false
+      description: The team identifier to perform the request on behalf of. Used for multi-tenant cache implementations where artifacts are scoped to teams.
+      schema:
+        type: string
   responses:
     Forbidden:
       description: Forbidden. The authenticated user does not have permission to access this resource.
@@ -96,40 +129,19 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    TeamId:
-      name: teamId
-      in: query
-      required: false
-      description: The team identifier to perform the request on behalf of. Used for multi-tenant cache implementations where artifacts are scoped to teams.
-      schema:
-        type: string
-    ArtifactClientCI:
-      name: x-artifact-client-ci
-      in: header
-      required: false
-      description: 'The continuous integration or delivery environment where this artifact operation is being performed. Examples: `github-actions`, `circleci`, `jenkins`.'
-      schema:
-        type: string
-        maxLength: 50
-    ArtifactClientInteractive:
-      name: x-artifact-client-interactive
-      in: header
-      required: false
-      description: Indicates whether the client is running in an interactive shell. `1` for interactive, `0` for non-interactive (CI/scripts).
-      schema:
-        type: integer
-        enum:
-        - 0
-        - 1
-    Slug:
-      name: slug
-      in: query
-      required: false
-      description: The team slug to perform the request on behalf of. Alternative to `teamId` for identifying the team.
-      schema:
-        type: string
   schemas:
+    Error:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+          description: A machine-readable error code
+        message:
+          type: string
+          description: A human-readable error message
     CacheEvent:
       type: object
       required:
@@ -171,18 +183,6 @@ components:
           type: integer
           minimum: 0
           description: The time taken to generate the artifact in milliseconds. Only meaningful for `HIT` events.
-    Error:
-      type: object
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: string
-          description: A machine-readable error code
-        message:
-          type: string
-          description: A human-readable error message
   securitySchemes:
     bearerToken:
       type: http

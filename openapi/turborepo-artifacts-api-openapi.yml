@@ -261,47 +261,7 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 components:
-  responses:
-    Forbidden:
-      description: Forbidden. The authenticated user does not have permission to access this resource.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    ArtifactNotFound:
-      description: Artifact not found. No artifact with the specified hash exists.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. The request is missing a valid authentication token or the token is invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. One or more of the provided values in the request query, headers, or body is invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
-    TeamId:
-      name: teamId
-      in: query
-      required: false
-      description: The team identifier to perform the request on behalf of. Used for multi-tenant cache implementations where artifacts are scoped to teams.
-      schema:
-        type: string
-    ArtifactClientCI:
-      name: x-artifact-client-ci
-      in: header
-      required: false
-      description: 'The continuous integration or delivery environment where this artifact operation is being performed. Examples: `github-actions`, `circleci`, `jenkins`.'
-      schema:
-        type: string
-        maxLength: 50
     ArtifactClientInteractive:
       name: x-artifact-client-interactive
       in: header
@@ -312,6 +272,21 @@ components:
         enum:
         - 0
         - 1
+    ArtifactClientCI:
+      name: x-artifact-client-ci
+      in: header
+      required: false
+      description: 'The continuous integration or delivery environment where this artifact operation is being performed. Examples: `github-actions`, `circleci`, `jenkins`.'
+      schema:
+        type: string
+        maxLength: 50
+    Slug:
+      name: slug
+      in: query
+      required: false
+      description: The team slug to perform the request on behalf of. Alternative to `teamId` for identifying the team.
+      schema:
+        type: string
     ArtifactHash:
       name: hash
       in: path
@@ -321,41 +296,14 @@ components:
         type: string
         pattern: ^[a-fA-F0-9]+$
         minLength: 1
-    Slug:
-      name: slug
+    TeamId:
+      name: teamId
       in: query
       required: false
-      description: The team slug to perform the request on behalf of. Alternative to `teamId` for identifying the team.
+      description: The team identifier to perform the request on behalf of. Used for multi-tenant cache implementations where artifacts are scoped to teams.
       schema:
         type: string
   schemas:
-    CachingStatusResponse:
-      type: object
-      required:
-      - status
-      properties:
-        status:
-          $ref: '#/components/schemas/CachingStatus'
-    ArtifactQueryResponse:
-      type: object
-      additionalProperties:
-        oneOf:
-        - $ref: '#/components/schemas/ArtifactInfo'
-        - $ref: '#/components/schemas/ArtifactError'
-      description: A map of artifact hashes to their information. The value is `null` if the artifact was not found.
-    ArtifactError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - message
-          properties:
-            message:
-              type: string
-              description: Error message describing why the artifact information could not be retrieved
     ArtifactInfo:
       type: object
       required:
@@ -371,27 +319,19 @@ components:
         tag:
           type: string
           description: The artifact tag/signature for verification
-    ArtifactQueryRequest:
+    ArtifactError:
       type: object
       required:
-      - hashes
+      - error
       properties:
-        hashes:
-          type: array
-          items:
-            type: string
-          description: Array of artifact hashes to query
-    ArtifactUploadResponse:
-      type: object
-      required:
-      - urls
-      properties:
-        urls:
-          type: array
-          items:
-            type: string
-            format: uri
-          description: Array of URLs where the artifact was stored. Implementers can return the storage location(s) for debugging purposes.
+        error:
+          type: object
+          required:
+          - message
+          properties:
+            message:
+              type: string
+              description: Error message describing why the artifact information could not be retrieved
     CachingStatus:
       type: string
       enum:
@@ -409,6 +349,24 @@ components:
         - `over_limit`: Remote caching is disabled due to usage limits (optional)
 
         - `paused`: Remote caching is temporarily paused (optional)'
+    ArtifactUploadResponse:
+      type: object
+      required:
+      - urls
+      properties:
+        urls:
+          type: array
+          items:
+            type: string
+            format: uri
+          description: Array of URLs where the artifact was stored. Implementers can return the storage location(s) for debugging purposes.
+    CachingStatusResponse:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          $ref: '#/components/schemas/CachingStatus'
     Error:
       type: object
       required:
@@ -421,6 +379,48 @@ components:
         message:
           type: string
           description: A human-readable error message
+    ArtifactQueryResponse:
+      type: object
+      additionalProperties:
+        oneOf:
+        - $ref: '#/components/schemas/ArtifactInfo'
+        - $ref: '#/components/schemas/ArtifactError'
+      description: A map of artifact hashes to their information. The value is `null` if the artifact was not found.
+    ArtifactQueryRequest:
+      type: object
+      required:
+      - hashes
+      properties:
+        hashes:
+          type: array
+          items:
+            type: string
+          description: Array of artifact hashes to query
+  responses:
+    Forbidden:
+      description: Forbidden. The authenticated user does not have permission to access this resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. The request is missing a valid authentication token or the token is invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ArtifactNotFound:
+      description: Artifact not found. No artifact with the specified hash exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. One or more of the provided values in the request query, headers, or body is invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerToken:
       type: http
