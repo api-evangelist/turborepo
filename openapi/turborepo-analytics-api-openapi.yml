@@ -77,58 +77,6 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 components:
-  parameters:
-    ArtifactClientInteractive:
-      name: x-artifact-client-interactive
-      in: header
-      required: false
-      description: Indicates whether the client is running in an interactive shell. `1` for interactive, `0` for non-interactive (CI/scripts).
-      schema:
-        type: integer
-        enum:
-        - 0
-        - 1
-    ArtifactClientCI:
-      name: x-artifact-client-ci
-      in: header
-      required: false
-      description: 'The continuous integration or delivery environment where this artifact operation is being performed. Examples: `github-actions`, `circleci`, `jenkins`.'
-      schema:
-        type: string
-        maxLength: 50
-    Slug:
-      name: slug
-      in: query
-      required: false
-      description: The team slug to perform the request on behalf of. Alternative to `teamId` for identifying the team.
-      schema:
-        type: string
-    TeamId:
-      name: teamId
-      in: query
-      required: false
-      description: The team identifier to perform the request on behalf of. Used for multi-tenant cache implementations where artifacts are scoped to teams.
-      schema:
-        type: string
-  responses:
-    Forbidden:
-      description: Forbidden. The authenticated user does not have permission to access this resource.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized. The request is missing a valid authentication token or the token is invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request. One or more of the provided values in the request query, headers, or body is invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -183,6 +131,58 @@ components:
           type: integer
           minimum: 0
           description: The time taken to generate the artifact in milliseconds. Only meaningful for `HIT` events.
+  responses:
+    Forbidden:
+      description: Forbidden. The authenticated user does not have permission to access this resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request. One or more of the provided values in the request query, headers, or body is invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized. The request is missing a valid authentication token or the token is invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    Slug:
+      name: slug
+      in: query
+      required: false
+      description: The team slug to perform the request on behalf of. Alternative to `teamId` for identifying the team.
+      schema:
+        type: string
+    ArtifactClientInteractive:
+      name: x-artifact-client-interactive
+      in: header
+      required: false
+      description: Indicates whether the client is running in an interactive shell. `1` for interactive, `0` for non-interactive (CI/scripts).
+      schema:
+        type: integer
+        enum:
+        - 0
+        - 1
+    ArtifactClientCI:
+      name: x-artifact-client-ci
+      in: header
+      required: false
+      description: 'The continuous integration or delivery environment where this artifact operation is being performed. Examples: `github-actions`, `circleci`, `jenkins`.'
+      schema:
+        type: string
+        maxLength: 50
+    TeamId:
+      name: teamId
+      in: query
+      required: false
+      description: The team identifier to perform the request on behalf of. Used for multi-tenant cache implementations where artifacts are scoped to teams.
+      schema:
+        type: string
   securitySchemes:
     bearerToken:
       type: http
