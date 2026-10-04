@@ -1,0 +1,26 @@
+slug: turborepo
+provider: Turborepo
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Artifacts
+  spec_file: turborepo-artifacts-api-openapi.yml
+  capability_id: BC-4210.10
+  capability_id_l1: BC-4210
+  capability_name: Continuous Integration Management
+  confidence: 0.75
+  evidence: GET /artifacts/{hash} downloadArtifact  Download a cache artifact; PUT /artifacts/{hash} uploadArtifact  Upload
+    a cache artifact — "Turborepo Remote Cache API ... any remote cache server must implement to be compatible
+    with Turborepo"
+  reason: Remote build cache artefact storage serves CI build pipelines and artefact production; Continuous
+    Integration Management is the closest fit, though it is cache plumbing for a build system.
